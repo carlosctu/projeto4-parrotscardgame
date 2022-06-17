@@ -49,10 +49,10 @@ function flipCard(element) {
     plays++
     verifySelectedCards(element);
   }
-  setTimeout(function () {
+}
+setTimeout(function () {
   endGame()
   },500)
-}
 function verifySelectedCards(element) {
   
   if (firstCard.isEqualNode(secondCard)) {
