@@ -16,6 +16,8 @@ let firstCard, secondCard, parentFirstCard, list1, list2;
 let card = "";
 // Com esta variavel vamos permitir com que apenas possam ser clickadas duas partas por vez
 let clicks = false;
+// Jogadas do usuário
+let plays = 0;
 verifyCards();
 setTable();
 
@@ -32,19 +34,24 @@ function flipCard(element) {
   if (
     (firstCard == null || firstCard == "") &&
     !element.querySelector(".back-face").classList.contains("matched")
+    
   ) {
     firstCard = element.querySelector(".back-face img");
     parentFirstCard = firstCard.parentNode.parentNode;
-    parentFirstCard.classList.add("flipped");
+    plays++
   } else if (
     !element.querySelector(".back-face").classList.contains("matched") &&
     element.querySelector(".back-face img") !== firstCard
+    
   ) {
     secondCard = element.querySelector(".back-face img");
     clicks = true
-    secondCard.parentNode.parentNode.classList.add("flipped");
+    plays++
     verifySelectedCards(element);
   }
+  setTimeout(function () {
+  endGame()
+  },500)
 }
 function verifySelectedCards(element) {
   
@@ -54,8 +61,7 @@ function verifySelectedCards(element) {
     aux++;
     firstCard = "";
     secondCard = "";
-    clicks = 0;
-    console.log("matched");
+    clicks = false;
   } else {
     firstCard = "";
     secondCard = "";
@@ -64,31 +70,14 @@ function verifySelectedCards(element) {
         .querySelector(".front-face")
         .classList.remove("front-flip");
       parentFirstCard.querySelector(".back-face").classList.remove("back-flip");
-      parentFirstCard.classList.remove("flipped");
 
       element.querySelector(".front-face").classList.remove("front-flip");
       element.querySelector(".back-face").classList.remove("back-flip");
-      element.classList.remove("flipped");
       // Destravando o click após desvirar as cartas
       clicks = false;
     }, 1000);
   }
 }
-
-// function verifyEven() {
-//   list1 = document.querySelectorAll(".flipped");
-//   list2 = document.querySelectorAll(".matched");
-//   console.log("entrou");
-//   if (list1.length / list2.length !== 1) {
-//     console.log("entrou2");
-//     for (let i = 0; i < list1; i++) {
-//       if (!list1[i].querySelector(".matched")) {
-//         console.log(list1[i]);
-//       }
-//     }
-//   }
-// }
-
 function verifyCards() {
   while (cardsNumber < 4 || cardsNumber > 14) {
     alert("Favor escolher um número entre 4 a 14.");
@@ -117,4 +106,10 @@ function setTable() {
 }
 function comparador() {
   return Math.random() - 0.5;
+}
+function endGame() {
+  let flippedCards = document.querySelectorAll(".matched").length
+  if (cardsNumber*2 == flippedCards) {
+    alert(`Você ganhou em ${plays} jogadas!`)
+  }
 }
