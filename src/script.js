@@ -12,48 +12,83 @@ let gif = [
 let tableGame = document.querySelector(".container");
 let cont = 0;
 let aux = 0;
-let firstCard,secondCard, parentFirstCard;
+let firstCard, secondCard, parentFirstCard, list1, list2;
 let card = "";
-
+// Com esta variavel vamos permitir com que apenas possam ser clickadas duas partas por vez
+let clicks = false;
 verifyCards();
 setTable();
 
+
+
 function flipCard(element) {
+  // Caso já se tenham duas cartas viradas, a função irá parar aqui
+  if (clicks) {
+    return
+  }
   element.querySelector(".front-face").classList.add("front-flip");
   element.querySelector(".back-face").classList.add("back-flip");
-  // console.log(element.querySelector(".back-face").classList.contains("matched"))
+
   if (
     (firstCard == null || firstCard == "") &&
     !element.querySelector(".back-face").classList.contains("matched")
   ) {
     firstCard = element.querySelector(".back-face img");
-    parentFirstCard = firstCard.parentNode.parentNode
+    parentFirstCard = firstCard.parentNode.parentNode;
+    parentFirstCard.classList.add("flipped");
   } else if (
     !element.querySelector(".back-face").classList.contains("matched") &&
     element.querySelector(".back-face img") !== firstCard
   ) {
     secondCard = element.querySelector(".back-face img");
+    clicks = true
+    secondCard.parentNode.parentNode.classList.add("flipped");
     verifySelectedCards(element);
   }
 }
 function verifySelectedCards(element) {
+  
   if (firstCard.isEqualNode(secondCard)) {
     firstCard.parentNode.classList.add("matched");
     secondCard.parentNode.classList.add("matched");
     aux++;
     firstCard = "";
     secondCard = "";
+    clicks = 0;
+    console.log("matched");
   } else {
+    firstCard = "";
+    secondCard = "";
     setTimeout(function () {
-      parentFirstCard.querySelector(".front-face").classList.toggle("front-flip");
-      parentFirstCard.querySelector(".back-face").classList.toggle("back-flip");
-      firstCard = "";
-      secondCard = "";
-      element.querySelector(".front-face").classList.toggle("front-flip");
-      element.querySelector(".back-face").classList.toggle("back-flip");
+      parentFirstCard
+        .querySelector(".front-face")
+        .classList.remove("front-flip");
+      parentFirstCard.querySelector(".back-face").classList.remove("back-flip");
+      parentFirstCard.classList.remove("flipped");
+
+      element.querySelector(".front-face").classList.remove("front-flip");
+      element.querySelector(".back-face").classList.remove("back-flip");
+      element.classList.remove("flipped");
+      // Destravando o click após desvirar as cartas
+      clicks = false;
     }, 1000);
   }
 }
+
+// function verifyEven() {
+//   list1 = document.querySelectorAll(".flipped");
+//   list2 = document.querySelectorAll(".matched");
+//   console.log("entrou");
+//   if (list1.length / list2.length !== 1) {
+//     console.log("entrou2");
+//     for (let i = 0; i < list1; i++) {
+//       if (!list1[i].querySelector(".matched")) {
+//         console.log(list1[i]);
+//       }
+//     }
+//   }
+// }
+
 function verifyCards() {
   while (cardsNumber < 4 || cardsNumber > 14) {
     alert("Favor escolher um número entre 4 a 14.");
