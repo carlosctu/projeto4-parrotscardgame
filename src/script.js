@@ -1,9 +1,59 @@
 let cards = [];
 let cardsNumber = Number(prompt("Com quantas cartas gostaria de jogar?"));
+let gif = [
+  `<img  src="img/bobrossparrot.gif" class="bobrossparrot">`,
+  `<img src="img/explodyparrot.gif" class="explodyparrot">`,
+  `<img src="img/fiestaparrot.gif" class="fiestaparrot">`,
+  `<img src="img/metalparrot.gif" class="metalparrot">`,
+  `<img src="img/revertitparrot.gif" class="revertitparrot">`,
+  `<img src="img/tripletsparrot.gif" class="tripletsparrot">`,
+  `<img src="img/unicornparrot.gif" class="unicornparrot">`,
+];
+let tableGame = document.querySelector(".container");
+let cont = 0;
+let aux = 0;
+let firstCard,secondCard, parentFirstCard;
+let card = "";
 
-verifySelectedCards();
+verifyCards();
+setTable();
 
-function verifySelectedCards() {
+function flipCard(element) {
+  element.querySelector(".front-face").classList.add("front-flip");
+  element.querySelector(".back-face").classList.add("back-flip");
+
+  if (
+    (firstCard == null || firstCard == "") &&
+    !element.querySelector(".back-face").classList.contains("matched")
+  ) {
+    firstCard = element.querySelector(".back-face img");
+    parentFirstCard = firstCard.parentNode.parentNode
+  } else if (
+    !element.querySelector(".back-face").classList.contains("matched") &&
+    element.querySelector(".back-face img") !== firstCard
+  ) {
+    secondCard = element.querySelector(".back-face img");
+    verifySelectedCards(element);
+  }
+}
+function verifySelectedCards(element) {
+  if (firstCard.isEqualNode(secondCard)) {
+    firstCard.parentNode.classList.add("matched");
+    secondCard.parentNode.classList.add("matched");
+    aux++;
+    firstCard = "";
+    secondCard = "";
+  } else {
+    setTimeout(function () {
+      parentFirstCard.querySelector(".front-face").classList.toggle("front-flip");
+      parentFirstCard.querySelector(".back-face").classList.toggle("back-flip");
+      firstCard = "";
+      element.querySelector(".front-face").classList.toggle("front-flip");
+      element.querySelector(".back-face").classList.toggle("back-flip");
+    }, 1000);
+  }
+}
+function verifyCards() {
   while (cardsNumber < 4 || cardsNumber > 14) {
     alert("Favor escolher um número entre 4 a 14.");
     cardsNumber = prompt("Com quantas cartas gostaria de jogar?");
@@ -13,27 +63,22 @@ function verifySelectedCards() {
     cardsNumber = prompt("Com quantas cartas gostaria de jogar?");
   }
 }
+function setTable() {
+  cardsNumber = cardsNumber / 2;
+  for (let i = 0; i < cardsNumber; i++) {
+    for (let j = 0; j < 2; j++) {
+      cards.push(
+        `<div class="card" onclick="flipCard(this)"><div class="front-face face"><img src="img/front.png" alt="front" /></div><div class="back-face face">${gif[i]}</div></div>`
+      );
+    }
+    cards.sort(comparador);
+  }
 
-let card = `<div class="card"><div class="front-face face">Frente</div><div class="back-face face">Verso</div></div>`;
-let gif = [
-  `<img src="img/bobrossparrot.gif" alt="bobrossparrot">`,
-  `<img src="img/explodyparrot.gif" alt="explodyparrot">`,
-  `<img src="img/fiestaparrot.gif" alt="fiestaparrot">`,
-  `<img src="img/metalparrot.gif" alt="metalparrot">`,
-  `<img src="img/revertitparrot.gif" alt="revertitparrot">`,
-  `<img src="img/tripletsparrot.gif" alt="tripletsparrot">`,
-  `<img src="img/unicornparrot.gif" alt="unicornparrot">`,
-];
-let tableGame = document.querySelector(".container");
-
-for (let i = 0; i < cardsNumber; i++) {
-  cards.push(card);
-  tableGame.innerHTML += `<div class="container"><div class="card"><div class="front-face face"><img src="img/front.png" alt="front" /></div><div class="back-face face">4${gif[i]}</div></div></div>`;
-//   document.querySelector(".back-face").innerHTML = gif[i];
+  while (cardsNumber * 2 > cont) {
+    tableGame.innerHTML += cards[cont];
+    cont++;
+  }
 }
-// console.log(cards[1]);
-// console.log(document.querySelector(".back-face").innerHTML);
-
-// function addGif(i) {
-//   document.querySelector(".back-face").innerHTML = gifs[i];
-// }
+function comparador() {
+  return Math.random() - 0.5;
+}
