@@ -21,7 +21,7 @@ setTable();
 function flipCard(element) {
   element.querySelector(".front-face").classList.add("front-flip");
   element.querySelector(".back-face").classList.add("back-flip");
-
+  // console.log(element.querySelector(".back-face").classList.contains("matched"))
   if (
     (firstCard == null || firstCard == "") &&
     !element.querySelector(".back-face").classList.contains("matched")
@@ -48,6 +48,7 @@ function verifySelectedCards(element) {
       parentFirstCard.querySelector(".front-face").classList.toggle("front-flip");
       parentFirstCard.querySelector(".back-face").classList.toggle("back-flip");
       firstCard = "";
+      secondCard = "";
       element.querySelector(".front-face").classList.toggle("front-flip");
       element.querySelector(".back-face").classList.toggle("back-flip");
     }, 1000);
