@@ -1,10 +1,5 @@
 body {
-  /* background-color: #eef9bf; */
-  background-image: url("https://images4.alphacoders.com/728/thumb-1920-728240.png");
-  /* background-image: url(https://images3.alphacoders.com/247/thumb-1920-247807.jpg); */
-  /* background-repeat: ; */
-  background-size: cover;
-  height: 100%;
+  background-color: #eef9bf;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -12,26 +7,12 @@ body {
   align-items: center;
   font-family: "Roboto", sans-serif;
 }
-.timer {
-  width: 100px;
-  height: 42px;
-  margin-top: 60px;
-  font-size: 52px;
-
-}
 body > h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* color: #75b79e; */
-  /* background: linear-gradient(to right, #3c50cf 0%, #cacf36 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
-  color: #FFCB05;
-  -webkit-text-stroke: 3px #3D7DCA;
-  /* -webkit-text-stroke: 3px red; */
-  /* border: 4px solid black; */
-  margin-top: 32px;
+  color: #75b79e;
+  margin-top: 40px;
   font-size: 56px;
   line-height: 65.63px;
   font-weight: 700;
@@ -42,7 +23,6 @@ body > h1 {
   position: relative;
   margin: 17px;
 }
-
 .container {
   height: 100%;
   max-width: 1077px;
@@ -50,7 +30,7 @@ body > h1 {
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
-  padding: 60px 88px;
+  padding: 30px 88px;
 }
 
 .container-6{
@@ -70,8 +50,7 @@ body > h1 {
 .face {
   width: 100%;
   height: 100%;
-  /* background-color: #a7e9af; */
-  background-image: linear-gradient(135deg, #ffd26f 10%, #3677ff 100%);
+  background-color: #a7e9af;
   border-radius: 10px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -84,31 +63,36 @@ body > h1 {
   propriedades) */
   /* Segundo valor indica o tempo que irá demorar em aplicar o efeito */
   /* Terceiro valor indica como o efeito irá se aplicado (padrão é linear)*/
-
   transition: all 0.5s linear;
   transform-style: preserve-3d;
 }
-
+.front-face:hover {
+  cursor: pointer;
+}
 .face > img {
-  width: 90%;
-  height: 90%;
+  width: 100px;
+  height: 100px;
 }
-
-.front-face > img {
-  width: 100%;
-  height: 100%;
-}
-
 .back-face {
   transform: rotateY(180deg);
 }
-
 .back-flip {
   transform: rotateY(0deg);
 }
-
 .front-flip {
   transform: rotateY(-180deg);
+}
+.timer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: inherit;
+  width: 100px;
+  height: 42px;
+  font-size: 30px;
+  background-color: #75b79e;
+  color: white;
+  border-bottom-left-radius: 20px;
 }
 
 @media (max-width: 650px) {
@@ -117,17 +101,19 @@ body > h1 {
     text-align: center;
     font-size: 42px;
     line-height: 42.19px;
-    /* margin: 0px auto; */
   }
   .timer {
     font-size: 22px;
     width: 80px;
     height: 32px;
-    position: fixed;
+    top: inherit;
     bottom: 0;
     right: 0;
     border-bottom-left-radius: inherit;
     border-top-left-radius: 20px;
-    background-color: white;
+  }
+  .card {
+    margin-top: inherit;
+    margin-bottom: 34px;
   }
 }

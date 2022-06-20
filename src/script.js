@@ -1,17 +1,25 @@
-let cards = [];
-let cardsNumber = Number(prompt("Com quantas cartas gostaria de jogar?"));
-let gif = [`<img src="img/jiggly.gif" alt="jiggly">`,`<img src="img/pikachu.gif" alt="pikachu">`,`<img src="img/psyduck.gif" alt="psyduck">`,`<img src="img/slowpo.gif" alt="slowpo">`,`<img src="img/squirtle.gif" alt="squirtle">`,`<img src="img/squirtle_water.gif" alt="squirtle_water">`,`<img src="img/pikapika.gif" alt="pikapika">`]
-// Embaralhando o array de gifs
-shuffleGifs(gif);
-let tableGame = document.querySelector(".container");
 let cont = 0;
 let aux = 0;
-let firstCard, secondCard, parentFirstCard, list1, list2;
+// Jogadas do usuário
+let plays = 0;
+let firstCard, secondCard, parentFirstCard;
 let card = "";
 // Com esta variavel vamos permitir com que apenas possam ser clickadas duas partas por vez
 let clicks = false;
-// Jogadas do usuário
-let plays = 0;
+let cards = [];
+let cardsNumber = Number(prompt("Com quantas cartas gostaria de jogar?"));
+let gif = [
+  `<img  src="img/bobrossparrot.gif" class="bobrossparrot">`,
+  `<img src="img/explodyparrot.gif" class="explodyparrot">`,
+  `<img src="img/fiestaparrot.gif" class="fiestaparrot">`,
+  `<img src="img/metalparrot.gif" class="metalparrot">`,
+  `<img src="img/revertitparrot.gif" class="revertitparrot">`,
+  `<img src="img/tripletsparrot.gif" class="tripletsparrot">`,
+  `<img src="img/unicornparrot.gif" class="unicornparrot">`,
+];
+// Embaralhando o array de gifs
+shuffleGifs(gif);
+let tableGame = document.querySelector(".container");
 // Variaveis do timer
 let min = 0;
 let seg = 0;
@@ -37,7 +45,7 @@ function setTable() {
   for (let i = 0; i < cardsNumber; i++) {
     for (let j = 0; j < 2; j++) {
       cards.push(
-        `<div class="card" onclick="flipCard(this)"><div class="front-face face"><img src="img/pokemon-frente.jpg" alt="front" /></div><div class="back-face face">${gif[i]}</div></div>`
+        `<div class="card" onclick="flipCard(this)"><div class="front-face face"><img src="img/front.png" alt="front" /></div><div class="back-face face">${gif[i]}</div></div>`
       );
     }
     cards.sort(comparador);
@@ -180,5 +188,5 @@ function layout(cardsNumber) {
 
 // Embaralha o Array de Gif
 function shuffleGifs(gif){
-  gif.sort(()=> Math.random() - 0.5);
+    gif.sort(()=> Math.random() - 0.5);
 }
